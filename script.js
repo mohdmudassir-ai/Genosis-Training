@@ -1,4 +1,4 @@
-const API_BASE_URL = 'https://ginosis-production.up.railway.app'; // Make sure this matches your FastAPI server
+const API_BASE_URL = 'https://genosis-training-production.up.railway.app/'; // Make sure this matches your FastAPI server
 
 const studentForm = document.getElementById('student-form');
 const studentsTbody = document.getElementById('students-tbody');
