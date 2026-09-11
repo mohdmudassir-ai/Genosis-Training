@@ -1,272 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Management System</title>
-
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management Hub</title>
+    <meta name="description" content="A simple, sleek student management system.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-  <div class="app">
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
 
-    <aside>
-      <div class="brand">Student Management</div>
+    <main class="container">
+        <header>
+            <h1>Student Management</h1>
+            <p>Presented by Lokesh kale.</p>
+        </header>
 
-      <div class="nav-title">Navigation</div>
+        <div class="dashboard-grid">
+            <!-- Form Section -->
+            <section class="glass-panel form-section">
+                <h2 id="form-title">Add New Student</h2>
+                <form id="student-form">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required placeholder="e.g. John Doe">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="course">Course</label>
+                        <input type="text" id="course" name="course" required placeholder="e.g. Computer Science">
+                    </div>
 
-      <nav>
-        <button class="active" data-page="dashboard">Dashboard</button>
-        <button data-page="add">Add Student</button>
-        <button data-page="students">View Students</button>
-        <button data-page="update">Update Student</button>
-        <button data-page="delete">Delete Student</button>
-      </nav>
+                    <div class="input-group">
+                        <label for="marks">Marks</label>
+                        <input type="number" id="marks" name="marks" required placeholder="e.g. 95">
+                    </div>
 
-      <div class="sidebar-note">
-        Student Management System<br />
-        FastAPI + Supabase
-      </div>
-    </aside>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="submit-btn">Add Student</button>
+                        <button type="button" class="btn btn-secondary hidden" id="cancel-btn">Cancel Edit</button>
+                    </div>
+                </form>
+            </section>
 
-    <main>
-
-      <div class="header">
-        <h1>Student Management System</h1>
-        <div class="subtitle">
-          Manage student records using FastAPI and Supabase
+            <!-- Data List Section -->
+            <section class="glass-panel list-section">
+                <h2>Student Directory</h2>
+                <div class="table-container">
+                    <table id="students-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Marks</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-tbody">
+                            <!-- Data will be populated here -->
+                            <tr>
+                                <td colspan="4" class="text-center loading-text">Loading students...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
         </div>
-      </div>
-
-      <!-- Dashboard -->
-      <section id="dashboard" class="page active">
-        <h2 class="section-title">Dashboard</h2>
-
-        <div class="cards">
-
-          <div class="card">
-            <div class="label">Total Students</div>
-            <div class="value" id="total">0</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Average Marks</div>
-            <div class="value" id="average">0.00</div>
-          </div>
-
-          <div class="card">
-            <div class="label">Highest Marks</div>
-            <div class="value" id="highest">0</div>
-          </div>
-
-        </div>
-
-        <div class="panel">
-          <div class="label">Backend Status</div>
-
-          <span class="status" id="backendStatus">
-            Checking...
-          </span>
-
-          <div class="small">
-            Connected to your Railway FastAPI backend.
-          </div>
-        </div>
-      </section>
-
-      <!-- Add Student -->
-      <section id="add" class="page">
-        <h2 class="section-title">Add Student</h2>
-
-        <div class="panel">
-
-          <form id="addForm">
-
-            <div class="form-grid">
-
-              <div class="field">
-                <label>Student Name</label>
-                <input
-                  id="addName"
-                  required
-                  placeholder="Enter student name"
-                />
-              </div>
-
-              <div class="field">
-                <label>Course</label>
-                <input
-                  id="addCourse"
-                  required
-                  placeholder="Enter course"
-                />
-              </div>
-
-            </div>
-
-            <div class="field">
-              <label>Marks</label>
-
-              <input
-                id="addMarks"
-                type="number"
-                min="0"
-                max="100"
-                required
-                value="0"
-              />
-            </div>
-
-            <button class="primary" type="submit">
-              Add Student
-            </button>
-
-            <div id="addMsg" class="message"></div>
-
-          </form>
-
-        </div>
-      </section>
-
-      <!-- View Students -->
-      <section id="students" class="page">
-
-        <h2 class="section-title">All Students</h2>
-
-        <div class="panel" style="max-width:none">
-
-          <div class="table-head">
-
-            <div class="label" style="margin:0">
-              Student Records
-            </div>
-
-            <button class="secondary" onclick="loadStudents()">
-              Refresh
-            </button>
-
-          </div>
-
-          <div class="table-wrap" id="studentTable"></div>
-
-        </div>
-
-      </section>
-
-      <!-- Update Student -->
-      <section id="update" class="page">
-
-        <h2 class="section-title">Update Student</h2>
-
-        <div class="panel">
-
-          <form id="updateForm">
-
-            <div class="field">
-              <label>Student ID</label>
-
-              <input
-                id="updateId"
-                type="number"
-                min="1"
-                required
-              />
-            </div>
-
-            <div class="form-grid">
-
-              <div class="field">
-                <label>New Name</label>
-
-                <input
-                  id="updateName"
-                  required
-                  placeholder="Enter new name"
-                />
-              </div>
-
-              <div class="field">
-                <label>New Course</label>
-
-                <input
-                  id="updateCourse"
-                  required
-                  placeholder="Enter new course"
-                />
-              </div>
-
-            </div>
-
-            <div class="field">
-              <label>New Marks</label>
-
-              <input
-                id="updateMarks"
-                type="number"
-                min="0"
-                max="100"
-                required
-                value="0"
-              />
-            </div>
-
-            <button class="primary" type="submit">
-              Update Student
-            </button>
-
-            <div id="updateMsg" class="message"></div>
-
-          </form>
-
-        </div>
-
-      </section>
-
-      <!-- Delete Student -->
-      <section id="delete" class="page">
-
-        <h2 class="section-title">Delete Student</h2>
-
-        <div class="panel">
-
-          <p class="small" style="margin:0 0 18px">
-            Deleting a student cannot be undone.
-          </p>
-
-          <form id="deleteForm">
-
-            <div class="field">
-
-              <label>Student ID</label>
-
-              <input
-                id="deleteId"
-                type="number"
-                min="1"
-                required
-              />
-
-            </div>
-
-            <button class="primary danger" type="submit">
-              Delete Student
-            </button>
-
-            <div id="deleteMsg" class="message"></div>
-
-          </form>
-
-        </div>
-
-      </section>
-
     </main>
 
-  </div>
+    <!-- Notification Toast -->
+    <div id="toast" class="toast hidden">
+        <p id="toast-message">Notification</p>
+    </div>
 
-  <!-- JavaScript -->
-  <script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
-</html> 
+</html>
